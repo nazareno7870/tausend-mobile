@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Alarmas Tausend IP</string>
+    <string name="title_activity_main">Alarmas Tausend IP</string>
+    <string name="package_name">com.lomo.tausend</string>
+    <string name="custom_url_scheme">com.lomo.tausend</string>
+</resources>

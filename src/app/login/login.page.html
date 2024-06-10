@@ -1,0 +1,66 @@
+<ion-content>
+  <ion-grid style="height: 100%">
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center"
+      style="height: 100%; width: 100%"
+    >
+      <ion-card class="landing-card">
+        <div class="logo-top">
+          <img src="./assets/eagle.png" />
+        </div>
+
+        <div class="logo">
+          <img src="./assets/landing.png" />
+        </div>
+
+        <ion-card-content>
+          <form #form="ngForm" (ngSubmit)="login(form)" method="post">
+            <div class="input-container">
+              <label class="label" for="email">Email</label>
+              <input ngModel type="email" name="email" class="input" required />
+            </div>
+
+            <div class="input-container">
+              <label class="label" for="password">Password</label>
+              <input
+                ngModel
+                [type]="showPassword ? 'text' : 'password'"
+                name="password"
+                class="input"
+                required
+              />
+              <ion-icon
+                class="btn-eye-icon"
+                slot="end"
+                [name]="passwordToggleIcon"
+                (click)="togglePassword();"
+              >
+              </ion-icon>
+            </div>
+
+            <div class="buttons-container">
+              <button
+                type="submit"
+                [disabled]="form.invalid"
+                class="btn-submit"
+              >
+                ACCEDER
+              </button>
+            </div>
+          </form>
+          <div class="buttons-container">
+            <button class="btn-register" [routerLink]="['/register']">
+              REGISTRARSE
+            </button>
+          </div>
+
+          <div class="center">
+            <p [routerLink]="['/forgot-password']" class="link">
+              Olvidé mi contraseña
+            </p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>

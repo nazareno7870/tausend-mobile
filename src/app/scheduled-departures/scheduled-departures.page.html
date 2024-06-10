@@ -1,0 +1,83 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Salidas Programables
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="height: 100%">
+    <div class="top" [ngClass]="{'center': sms}">
+      <button (click)="loadSchedule()" class="btn-refresh" *ngIf="!sms">
+        <ion-icon
+          name="refresh"
+          style="min-width: 16px; min-height: 16px"
+        ></ion-icon>
+      </button>
+      <button class="btn-selector" [routerLink]="['/selector']">
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center departures-row"
+      *ngIf="!sms"
+    >
+      <ion-col *ngIf="scheduledDepartures.length>0" style="gap: 20px">
+        <ion-row
+          *ngFor="let schedule of scheduledDepartures"
+          style="width: 100%"
+          class="row-space"
+        >
+          <label class="switch-button">
+            <div
+              class="switch-outer"
+              [class.checked]="schedule.Activated"
+            >
+              <div class="button">
+                <span (click)="changeStatus(schedule)" class="button-toggle"></span>
+                <span (click)="changeStatus(schedule)" class="button-indicator"></span>
+              </div>
+            </div>
+          </label>
+          <div class="zone-text">
+            <p>
+              {{ +schedule.Name <= 8 ? "Salida "+schedule.Name : schedule.Name }}
+            </p>
+          </div>
+          <div
+            class="edit-container"
+            style="width: 40px; height: 40px"
+            (click)="showNameAlert(schedule)"
+          >
+            <img src="../../assets/edit2.svg" />
+          </div>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center departures-row"
+      *ngIf="sms"
+    >
+      <ion-col style="padding: 20px">
+        <ion-row
+          *ngFor="let schedule of smsScheduledDepartures"
+          style="width: 100%"
+        >
+          <button
+            (click)="smsSchedule(schedule)"
+            class="btn"
+            [ngClass]="{'activated' : schedule.Color == 'danger'}"
+          >
+            {{ schedule.Name }}
+          </button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

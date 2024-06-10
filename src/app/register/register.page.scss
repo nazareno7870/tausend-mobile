@@ -1,0 +1,134 @@
+@import "../../theme/colors.scss";
+
+ion-content {
+  --ion-background-color: linear-gradient(180deg, #1d4c5f 0%, #1f063e 100%);
+}
+
+.landing-card {
+  --background: white;
+  border-radius: 10px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: visible !important;
+  contain: none !important;
+}
+
+.logo-top {
+  position: absolute;
+  top: -120px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 180px;
+  padding-right: 30px;
+  z-index: 20;
+}
+.center {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-btn {
+  --background: white;
+  --border-color: #145da0;
+  --color: #145da0;
+}
+
+ion-item {
+  --background: white;
+}
+ion-card-content {
+  width: 100%;
+}
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  position: relative;
+
+  label {
+    text-transform: uppercase;
+    padding-left: 16px;
+    padding-bottom: 4px;
+    color: $primary;
+    font-size: 12px;
+  }
+
+  input {
+    height: 40px;
+    border: 1px solid $primary;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    color: $primary;
+    padding: 0 20px;
+    outline: none;
+    width: 100%;
+    transition: all 0.3s;
+  }
+}
+
+.btn-eye-icon {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  background: transparent;
+  width: 20px;
+  height: 20px;
+  ion-icon {
+    font-size: 28px;
+    color: #757575;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.btn-submit {
+  border-radius: 20px;
+  background-color: $primary;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  width: 190px;
+  height: 45px;
+  transition: all 0.3s;
+}
+.btn-submit[disabled] {
+  background-color: #9cbadf;
+}
+.btn-eye-icon:focus {
+  outline: none !important;
+}
+
+.btn-login {
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: 1px solid $primary;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: $primary;
+  width: 190px;
+  height: 45px;
+  transition: all 0.3s;
+}
+h4 {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 29px;
+  color: $primary;
+  padding: 20px;
+}

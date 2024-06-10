@@ -1,0 +1,56 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Puesta en Hora
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="height: 100%;">
+    <div class="top">
+      <button (click)="getDeviceTime()" class="btn-refresh">
+        <ion-icon
+        name="refresh"
+        style="min-width: 16px; min-height: 16px"
+      ></ion-icon>
+      </button>
+      <button class="btn-selector" [routerLink]="['/selector']" >
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+    <ion-row *ngIf="loading" class="ion-align-items-center ion-justify-content-center" style="height: 500px;">
+      <ion-spinner color="light" name="crescent"></ion-spinner>
+    </ion-row>
+
+    <div class="center" *ngIf="!loading">
+      <div class="card">
+        <ion-row
+          *ngIf="!loading"
+          class="ion-align-items-center ion-justify-content-center"
+          style="width: 100%;"
+        >
+          <div class="container">
+            <div class="time">
+              <h3>Horario de la central</h3>
+              <p>{{ deviceTime }}</p>
+            </div>
+            <div class="time">
+              <h3>Horario actual</h3>
+              <p>{{ currentTime }}</p>
+            </div>
+          </div>
+        </ion-row>
+      </div>
+      <div class="row">
+        <button (click)="syncTime()" class="btn-primary">
+          Sincronizar Horario
+        </button>
+      </div>
+    </div>
+  </ion-grid>
+</ion-content>

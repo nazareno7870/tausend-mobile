@@ -1,0 +1,525 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <div
+      class="top"
+      style="justify-content: flex-end; padding-top: 10px"
+      *ngIf="sms"
+    >
+      <button
+        class="btn-selector"
+        [routerLink]="['/selector']"
+        *ngIf="centralSelected"
+      >
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+    <div
+      class="top"
+      style="
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        padding-top: 10px;
+      "
+      *ngIf="!sms"
+    >
+      <button (click)="onGetStatus()" class="btn-refresh">
+        <ion-icon
+          name="refresh"
+          style="min-width: 16px; min-height: 16px"
+        ></ion-icon>
+      </button>
+      <button
+        class="btn-selector"
+        [routerLink]="['/selector']"
+        *ngIf="centralSelected"
+      >
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="height: 100%" *ngIf="!sms">
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center status-grid"
+      #statusGrid
+    >
+      <ion-spinner
+        *ngIf="statusLoading"
+        color="light"
+        name="crescent"
+      ></ion-spinner>
+      <ion-grid *ngIf="!statusLoading">
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col *ngFor="let icon of arrInfo">
+            <div class="row">
+              <button (click)="onAction(icon.action)" class="fail-button">
+                <div class="column">
+                  <img [src]="'../../assets/'+icon.icon+'.svg'" />
+                  <ion-label> {{ icon.msg }} </ion-label>
+                </div>
+              </button>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row
+          class="ion-align-items-center ion-justify-content-center"
+          style="margin-top: 20px"
+        >
+          <ion-grid
+            *ngFor="let icon of arrStatus"
+            style="
+              min-height: 170px;
+              max-width: 100vw;
+              position: relative;
+              z-index: 10;
+            "
+          >
+            <ion-row class="ion-align-items-center ion-justify-content-center">
+              <button
+                class="status-icon"
+                (click)="onAction(icon.action)"
+                [ngClass]="{'status-icon-bell' : icon.icon == 'notifications_active','status-red' : icon.icon === 'wb_sunny' || icon.icon === 'nights_stay' || icon.icon === 'house','status-green' : icon.color == 'success','status-gray' : icon.color == 'medium','options': changeButton}"
+              >
+                <img
+                  [src]="'../../assets/close.svg'"
+                  *ngIf="changeButton"
+                  class="fade-in"
+                />
+                <div class="column">
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                    *ngIf="icon.icon === 'wb_sunny' || icon.icon === 'nights_stay' || icon.icon === 'house'"
+                  >
+                    <ion-text> Armada </ion-text>
+                  </ion-row>
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                    *ngIf="icon.icon === 'notifications_active'"
+                  >
+                    <ion-text class="text-shadow"> Sirena Sonando </ion-text>
+                  </ion-row>
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                    *ngIf="icon.icon !== 'notifications_active'"
+                  >
+                    <img
+                      [src]="'../../assets/'+icon.icon+'.svg'"
+                      style="
+                        margin: 4px 0;
+                        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                        max-height: 120px;
+                      "
+                    />
+                  </ion-row>
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                    *ngIf="icon.icon === 'notifications_active'"
+                  >
+                    <img
+                      [src]="'../../assets/'+icon.icon+bellImage+'.svg'"
+                      style="
+                        margin: 4px 0;
+                        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                        max-height: 100px;
+                      "
+                    />
+                  </ion-row>
+                  <!-- <i class="material-icons large-icon" style="margin: 10px 0; color: #fff"
+                    >{{ icon.icon }}</i
+                  > -->
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <div [ngSwitch]="icon.icon">
+                      <ion-text *ngSwitchCase="'wb_sunny'"> Modo dia </ion-text>
+                      <ion-text *ngSwitchCase="'nights_stay'">
+                        Modo noche
+                      </ion-text>
+                      <ion-text *ngSwitchCase="'house'">
+                        Modo ausente
+                      </ion-text>
+                      <ion-text
+                        *ngSwitchCase="'notifications_active'"
+                        class="text-shadow"
+                      >
+                      </ion-text>
+                      <ion-text *ngSwitchDefault> {{ icon.msg }} </ion-text>
+                    </div>
+                  </ion-row>
+                </div>
+              </button>
+            </ion-row>
+
+            <ion-row
+              class="options_container"
+              style="margin-top: 20px; height: 140px"
+              [ngClass]="{'fade-in' : changeButton}"
+            >
+              <div
+                (click)="onArmAlarm()"
+                class="column button-option"
+                [ngClass]="{'option-1' : changeButton}"
+              >
+                <ion-row
+                  class="ion-align-items-center ion-justify-content-center"
+                >
+                  <img
+                    [src]="'../../assets/house.svg'"
+                    style="
+                      margin: 4px 0;
+                      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                      width: 80px;
+                      margin-bottom: 10px;
+                      left: -4px;
+                    "
+                  />
+                </ion-row>
+                <div>
+                  <ion-text
+                    style="
+                      text-transform: none;
+                      font-size: 12px;
+                      padding: 0px 4px;
+                    "
+                    >Armar modo ausente
+                  </ion-text>
+                </div>
+              </div>
+              <div
+                (click)="onNightArmAlarm()"
+                class="column button-option"
+                [ngClass]="{'option-2' : changeButton}"
+                style="padding: 12px 8px 2px"
+              >
+                <ion-row
+                  class="ion-align-items-center ion-justify-content-center"
+                  style="margin-top: -10px"
+                >
+                  <img
+                    [src]="'../../assets/nights_stay.svg'"
+                    style="
+                      margin: 4px 0;
+                      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                      min-width: 170px;
+                      margin-bottom: 10px;
+                    "
+                  />
+                </ion-row>
+                <div>
+                  <ion-text
+                    style="
+                      text-transform: none;
+                      font-size: 12px;
+                      padding: 0px 4px 0px 4px;
+                    "
+                    >Armar modo noche
+                  </ion-text>
+                </div>
+              </div>
+              <div
+                (click)="onDayArmAlarm()"
+                class="column button-option"
+                [ngClass]="{'option-3' : changeButton}"
+              >
+                <ion-row
+                  class="ion-align-items-center ion-justify-content-center"
+                >
+                  <img
+                    [src]="'../../assets/wb_sunny.svg'"
+                    style="
+                      margin: 4px 0;
+                      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                      min-width: 170px;
+                      margin-bottom: 10px;
+                    "
+                  />
+                </ion-row>
+                <div>
+                  <ion-text
+                    style="
+                      text-transform: none;
+                      font-size: 12px;
+                      padding: 0px 4px;
+                    "
+                    >Armar modo dia
+                  </ion-text>
+                </div>
+              </div>
+            </ion-row>
+          </ion-grid>
+        </ion-row>
+      </ion-grid>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <div class="flex-colum">
+        <div class="flex-row">
+          <button (click)="onPanic()" class="btn-bottom">
+            <img
+              src="../../assets/panic.svg"
+              class="icons-bottom"
+              style="width: 60px; height: 60px; margin-top: 6px"
+            />
+            <ion-label class="icon-label" style="font-size: 12px"
+              >Pánico</ion-label
+            >
+          </button>
+          <button (click)="onAssault()" class="btn-bottom">
+            <img
+              src="../../assets/robbery.svg"
+              style="width: 60px; height: 60px; margin-top: 6px"
+            />
+            <ion-label class="icon-label" style="font-size: 12px"
+              >Asalto Silencioso</ion-label
+            >
+          </button>
+        </div>
+        <div class="flex-row">
+          <button (click)="onEmergency()" class="btn-emergency">
+            <img
+              src="../../assets/warning.svg"
+              class="icons-bottom"
+              style="
+                width: 80px;
+                height: 80px;
+                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+              "
+            />
+            <ion-label
+              class="icon-warning"
+              style="
+                font-size: 12px;
+                text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
+                padding-bottom: 6px;
+              "
+              >Emergencia</ion-label
+            >
+          </button>
+        </div>
+      </div>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid style="height: 100%" *ngIf="sms">
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center sms-grid"
+      #statusGrid
+    >
+      <ion-grid>
+        <ion-row
+          class="ion-align-items-center ion-justify-content-center"
+          style="margin-top: 20px"
+        >
+          <ion-grid>
+            <ion-row
+              class="ion-align-items-center ion-justify-content-center top-buttons"
+            >
+              <button
+                class="sms-button status-green"
+                (click)="smsArmAlarmAbsent()"
+              >
+                <div class="column">
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <img
+                      [src]="'../../assets/house.svg'"
+                      style="
+                        margin: 4px 0;
+                        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                        max-height: 65px;
+                      "
+                    />
+                  </ion-row>
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <div>
+                      <ion-text style="font-size: 11px">
+                        Armar modo ausente
+                      </ion-text>
+                    </div>
+                  </ion-row>
+                </div>
+              </button>
+              <button
+                class="sms-button status-green"
+                (click)="smsArmAlarmDay()"
+              >
+                <div class="column">
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <img
+                      [src]="'../../assets/wb_sunny.svg'"
+                      style="
+                        margin: 4px 0;
+                        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                        max-height: 65px;
+                      "
+                    />
+                  </ion-row>
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <div>
+                      <ion-text style="font-size: 11px">
+                        Armar modo dia
+                      </ion-text>
+                    </div>
+                  </ion-row>
+                </div>
+              </button>
+            </ion-row>
+            <ion-row
+              class="ion-align-items-center ion-justify-content-center top-buttons"
+            >
+              <button
+                class="sms-button status-green"
+                (click)="smsArmAlarmNight()"
+              >
+                <div class="column">
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <img
+                      [src]="'../../assets/nights_stay.svg'"
+                      style="
+                        margin: 4px 0;
+                        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                        max-height: 65px;
+                      "
+                    />
+                  </ion-row>
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <div>
+                      <ion-text style="font-size: 11px">
+                        Armar modo noche
+                      </ion-text>
+                    </div>
+                  </ion-row>
+                </div>
+              </button>
+            </ion-row>
+            <ion-row
+              class="ion-align-items-center ion-justify-content-center top-buttons"
+              style="margin-bottom: 0"
+            >
+              <button
+                class="disarm-button status-red"
+                (click)="smsDisarmAlarm()"
+              >
+                <div class="column">
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <img
+                      [src]="'../../assets/disarm.svg'"
+                      style="
+                        margin: 4px 0;
+                        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                        max-height: 80px;
+                      "
+                    />
+                  </ion-row>
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <div>
+                      <ion-text style="font-size: 12px">
+                        Desarmar alarma
+                      </ion-text>
+                    </div>
+                  </ion-row>
+                </div>
+              </button>
+              <button class="disarm-button status-yellow" (click)="smsStatus()">
+                <div class="column">
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <img
+                      [src]="'../../assets/stateIcon.svg'"
+                      style="
+                        margin: 4px 0;
+                        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+                        max-height: 80px;
+                      "
+                    />
+                  </ion-row>
+                  <ion-row
+                    class="ion-align-items-center ion-justify-content-center"
+                  >
+                    <div>
+                      <ion-text style="font-size: 12px">
+                        Consultar estado
+                      </ion-text>
+                    </div>
+                  </ion-row>
+                </div>
+              </button>
+            </ion-row>
+          </ion-grid>
+        </ion-row>
+      </ion-grid>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <div class="flex-colum">
+        <div class="flex-row">
+          <button (click)="smsPanic()" class="btn-bottom">
+            <img
+              src="../../assets/panic.svg"
+              class="icons-bottom"
+              style="width: 60px; height: 60px; margin-top: 6px"
+            />
+            <ion-label class="icon-label" style="font-size: 12px"
+              >Pánico</ion-label
+            >
+          </button>
+          <button (click)="smsSilentAssault()" class="btn-bottom">
+            <img
+              src="../../assets/robbery.svg"
+              style="width: 60px; height: 60px; margin-top: 6px"
+            />
+            <ion-label class="icon-label" style="font-size: 12px"
+              >Asalto Silencioso</ion-label
+            >
+          </button>
+        </div>
+        <div class="flex-row">
+          <button (click)="smsEmergency()" class="btn-emergency">
+            <img
+              src="../../assets/warning.svg"
+              class="icons-bottom"
+              style="
+                width: 80px;
+                height: 80px;
+                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
+              "
+            />
+            <ion-label
+              class="icon-warning"
+              style="
+                font-size: 12px;
+                text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
+                padding-bottom: 6px;
+              "
+              >Emergencia</ion-label
+            >
+          </button>
+        </div>
+      </div>
+    </ion-row>
+  </ion-grid>
+</ion-content>

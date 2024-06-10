@@ -1,0 +1,33 @@
+ion-header {
+    --ion-background-color: #0c2d48;
+  }
+  
+  ion-toolbar {
+    --color: white;
+  }
+  
+  ion-content {
+    --ion-background-color: #b1d4e0;
+  }
+  
+  .home-card {
+    background-color: white !important;
+    margin: 24px 8px 24px 8px;
+  }
+  
+  .home-item {
+    --background: white;  
+  }
+  
+  .home-icon {
+    margin: auto;
+    display: block;
+    color: #2e8bc0;
+  }
+  
+  .home-icon-warning {
+    margin: auto;
+    display: block;
+    color: red;
+  }
+  

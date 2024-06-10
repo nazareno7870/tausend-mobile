@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "668428209473",
+    "firebase_url": "https://lomo-tausend.firebaseio.com",
+    "project_id": "lomo-tausend",
+    "storage_bucket": "lomo-tausend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668428209473:android:1031afe322f6bfb82525c0",
+        "android_client_info": {
+          "package_name": "com.lomo.tausend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668428209473-b9fnv41nt92jf7j4seu3uc21lvi241ph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSq_PGNpECw0w48AB1MLPm3CUKzitOpFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "668428209473-b9fnv41nt92jf7j4seu3uc21lvi241ph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

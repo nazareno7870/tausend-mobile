@@ -1,0 +1,78 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Memoria
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content
+  style="
+    background: linear-gradient(180deg, #1d4c5f 0%, #1f063e 100%) !important;
+  "
+>
+  <ion-grid style="height: 100%">
+    <div class="top">
+      <button (click)="onGetStatus()" class="btn-refresh">
+        <ion-icon
+        name="refresh"
+        style="min-width: 16px; min-height: 16px"
+      ></ion-icon>
+      </button>
+      <button class="btn-selector" [routerLink]="['/selector']" >
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+    <ion-row
+      *ngIf="loading"
+      class="ion-align-items-center ion-justify-content-center"
+      style="height: 325px"
+    >
+      <ion-spinner color="light" name="crescent"></ion-spinner>
+    </ion-row>
+    <ion-row
+      *ngIf="!loading"
+      class="ion-align-items-center ion-justify-content-center"
+      style="width: 100%"
+    >
+      <div class="center">
+        <div class="card" *ngIf="memoryPages.length == 0">
+          <div class="container">
+            <p>No existen zonas con memoria</p>
+          </div>
+        </div>
+      </div>
+
+      <ion-col>
+        <ion-slides pager="true">
+          <ion-slide *ngFor="let page of memoryPages">
+            <ion-list style="width: 100%" lines="none">
+              <ion-item
+                *ngFor="let zone of page"
+                style="margin-bottom: 6px; padding: 0px 10px"
+              >
+                <button
+                  slot="start"
+                  class="btn-radius"
+                  [ngClass]="{'blink': zone.Color == 'blink', 'warning': zone.Color == 'warning', 'danger': zone.Color == 'danger'}"
+                >
+                  <img src="../../assets/zones.svg" />
+                </button>
+                <p class="zone-text">
+                  {{ zone.Name == zone.ZoneNumber.toString() ? 'Zona ' +
+                  zone.ZoneNumber : zone.Name }}
+                </p>
+              </ion-item>
+            </ion-list>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+    <div class="row">
+      <button (click)="goBack()" class="btn-primary secondary">Volver</button>
+    </div>
+  </ion-grid>
+</ion-content>

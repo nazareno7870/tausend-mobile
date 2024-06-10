@@ -1,0 +1,187 @@
+@import "../../theme/colors.scss";
+
+ion-header {
+  --ion-background-color: #0c2d48;
+}
+
+ion-toolbar {
+  --color: white;
+  --background: #1d4c5f;
+  --border-color: #f24aec00;
+  --border-width: 0px 0;
+}
+
+ion-content {
+  --ion-background-color: linear-gradient(180deg, #1d4c5f 0%, #1f063e 100%);
+}
+
+ion-item {
+  --background: white;
+}
+
+.setup-card {
+  background-color: white !important;
+  //   margin: 24px 8px 24px 8px;
+}
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  h1 {
+    font-weight: 400;
+    font-size: 18px;
+    color: white;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+.content-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  min-width: 120px;
+  h1 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin: 0;
+  }
+}
+.card {
+  background: #ffffff;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+  padding: 20px;
+  margin-top: 30px;
+  gap: 20px;
+  -webkit-animation: fade-in 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  :last-child{
+    border-bottom: none;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  gap: 20px;
+}
+.btn-primary {
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background: $primary;
+  font-weight: 400;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  padding: 16px;
+  margin-bottom: 20px;
+  transition: all 0.3s;
+}
+.secondary {
+  background: #ffffff;
+  color: $secondary;
+  font-weight: 600;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+.detail-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+    border-bottom: 1px solid $primary;
+    padding-bottom: 10px;
+    h3{
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 21px;
+        color: $primary;
+        margin: 0;
+    }
+    p{
+        font-weight: 300;
+        font-size: 13px;
+        line-height: 19px;
+        color: $primary;
+        margin: 0;
+    }
+}
+.delete {
+  background: $danger;
+  margin-bottom: 0;
+}
+.modal {
+  background: rgba(0, 0, 0, 0.46);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  gap: 20px;
+}
+.modal-container {
+  height: 210px;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 90%;
+  gap: 20px;
+  -webkit-animation: fade-in 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  h3 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: $primary;
+    margin: 0;
+  }
+  h4 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ad0000;
+    text-align: center;
+    span{
+      font-weight: 700;
+    }
+  }
+}

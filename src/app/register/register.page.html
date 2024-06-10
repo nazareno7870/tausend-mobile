@@ -1,0 +1,69 @@
+<ion-content>
+  <ion-grid style="height: 100%; padding: 0">
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center"
+      style="height: 100%; width: 100%; margin-top:30px"
+    >
+      <ion-card class="landing-card">
+        <div class="logo-top">
+          <img src="./assets/eagle.png" />
+        </div>
+
+        <ion-card-content>
+          <div class="center">
+            <h4>REGISTRARSE</h4>
+          </div>
+          <form #form="ngForm" (ngSubmit)="register(form)" method="post">
+            <div class="input-container">
+              <label class="label" for="fName">Nombre</label>
+              <input ngModel type="text" name="fName" class="input" required />
+            </div>
+
+            <div class="input-container">
+              <label class="label" for="lName">Apellido</label>
+              <input ngModel type="text" name="lName" class="input" required />
+            </div>
+
+            <div class="input-container">
+              <label class="label" for="email">Email</label>
+              <input ngModel type="email" name="email" class="input" required />
+            </div>
+
+            <div class="input-container">
+              <label class="label" for="password">Contraseña</label>
+              <input
+                ngModel
+                [type]="showPassword ? 'text' : 'password'"
+                name="password"
+                class="input"
+                required
+              />
+              <ion-icon
+                class="btn-eye-icon"
+                slot="end"
+                [name]="passwordToggleIcon"
+                (click)="togglePassword();"
+              >
+              </ion-icon>
+            </div>
+
+            <div class="buttons-container">
+              <button
+                type="submit"
+                [disabled]="form.invalid"
+                class="btn-submit"
+              >
+                REGISTRARSE
+              </button>
+            </div>
+          </form>
+          <div class="buttons-container">
+            <button class="btn-login" [routerLink]="['/login']">
+              CANCELAR
+            </button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>

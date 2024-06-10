@@ -1,5 +1,7 @@
 {
-  "name": "tausend-mobile",
-  "integrations": {},
+  "name": "Alarmas Tausend IP",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

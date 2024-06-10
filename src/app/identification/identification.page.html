@@ -1,0 +1,47 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Identificación
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="column">
+    <div class="top center">
+      <button class="btn-selector" [routerLink]="['/selector']">
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+  </div>
+
+  <div class="center">
+    <div class="card">
+      <div class="input-container">
+        <label for="identification">Nombre para identificar su alarma</label>
+        <input
+          ngModel
+          type="text"
+          name="identification"
+          id="identification"
+          [ngClass]="{'input-ok': identificationOk}"
+          [(ngModel)]="identification"
+          (ngModelChange)="identification = changeIdentification($event)"
+          required
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <button (click)="sendSMS();" class="btn-primary">Enviar</button>
+    <button
+      [routerDirection]="'root'"
+      routerLink="/home"
+      class="btn-primary secondary"
+    >
+      Cancelar
+    </button>
+  </div>
+</ion-content>

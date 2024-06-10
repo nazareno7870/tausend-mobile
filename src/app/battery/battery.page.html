@@ -1,0 +1,54 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Estado de Batería
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid style="height: 100%; display: flex; flex-flow: column">
+    <div class="top">
+      <button (click)="loadData()" class="btn-refresh">
+        <ion-icon
+          name="refresh"
+          style="min-width: 16px; min-height: 16px"
+        ></ion-icon>
+      </button>
+      <button class="btn-selector" [routerLink]="['/selector']">
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+
+    <div class="center">
+      <div class="card">
+        <ion-row
+          class="ion-align-items-center ion-justify-content-center"
+          style="width: 100%"
+        >
+          <div class="container">
+            <div class="details">
+              <h3>Tensión de entrada</h3>
+              <h3>{{ batteryStatus.InTension }} V</h3>
+            </div>
+            <div class="details">
+              <h3>Tensión de carga</h3>
+              <h3>{{ batteryStatus.ChargeTension }} V</h3>
+            </div>
+            <div class="details">
+              <h3>Corriente de carga</h3>
+              <h3>{{ batteryStatus.Current }} mA</h3>
+            </div>
+            <div class="details">
+              <h3>Tensión de descarga</h3>
+              <h3>{{ batteryStatus.TestTension }} V</h3>
+            </div>
+          </div>
+        </ion-row>
+      </div>
+    </div>
+  </ion-grid>
+</ion-content>

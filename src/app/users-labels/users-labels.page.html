@@ -1,0 +1,73 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Etiquetas de Usuario
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="height: 100%">
+    <div class="top">
+      <button class="btn-selector" [routerLink]="['/selector']" >
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+
+    <ion-row class="center" >
+      <button (click)="addUserLabel()" class="btn-add">
+        Añadir etiqueta de usuario
+      </button>
+    </ion-row>
+    <ion-row
+      *ngIf="loading"
+      class="ion-align-items-center ion-justify-content-center"
+      style="height: 325px"
+    >
+      <ion-spinner color="light" name="crescent"></ion-spinner>
+    </ion-row>
+
+    <div class="center" *ngIf="!loading">
+      <div class="card">
+        <ion-row
+          *ngIf="!loading"
+          class="ion-align-items-center ion-justify-content-center"
+          style="width: 100%"
+        >
+          <div class="container" *ngIf="arrAddUsers.length == 0">
+            <p>No existen etiquetas de usuarios</p>
+          </div>
+          <div class="container" *ngIf="arrAddUsers.length > 0">
+            <ng-container *ngFor="let user of arrAddUsers" style="width: 100%">
+              <div
+                class="users"
+                *ngIf="user.UserName"
+                (click)="editUserLaber(user)"
+              >
+                <img
+                  src="../../assets/profile.svg"
+                  style="padding-left: 10px"
+                />
+                <div class="user-info">
+                  <h3>{{ user.UserName }}</h3>
+                  <p>Usuario número {{ user.UserNumber }}</p>
+                </div>
+                <img src="../../assets/editLabels.svg" />
+              </div>
+            </ng-container>
+          </div>
+        </ion-row>
+      </div>
+    </div>
+    <div class="row">
+      <button (click)="saveChanges()" class="btn-primary">
+        Guardar Cambios
+      </button>
+      <button (click)="goBack()" class="btn-primary secondary">Volver</button>
+    </div>
+  </ion-grid>
+</ion-content>

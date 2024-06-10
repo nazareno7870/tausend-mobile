@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Armar Presente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="height: 100%">
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 100%">
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-no-padding">
+          <ion-col size="6" class="ion-no-padding">
+            <ion-card class="home-card" (click)="onDayArmAlarm()">
+              <ion-card-content class="ion-text-center">
+                <ion-item class="home-item" lines="none">
+                  <ion-icon name="sunny" class="home-icon" size="large">
+                  </ion-icon>
+                </ion-item>
+                <ion-label style="color: #2E8BC0;">Día</ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-no-padding">
+          <ion-col size="6" class="ion-no-padding">
+            <ion-card class="home-card" (click)="onNightArmAlarm()">
+              <ion-card-content class="ion-text-center">
+                <ion-item class="home-item" lines="none">
+                  <ion-icon name="moon" class="home-icon" size="large">
+                  </ion-icon>
+                </ion-item>
+                <ion-label style="color: #2E8BC0;">Noche</ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-text-center">
+          <ion-col>
+            <ion-button color="medium" (click)="closeModal();">Cancelar</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

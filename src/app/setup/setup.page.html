@@ -1,0 +1,244 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center">
+      Vincular Dispositivo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="height: 100%">
+    <div class="top" *ngIf="typeForm === 'edit'">
+      <button class="btn-selector" [routerLink]="['/selector']">
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+    <div class="center" *ngIf="!typeForm" style="width: 100%">
+      <div class="card">
+        <ion-row
+          class="ion-align-items-center ion-justify-content-center"
+          style="width: 100%"
+        >
+          <div
+            class="container"
+            *ngIf="centrals.length === 0"
+            style="width: 100%"
+          >
+            <p>No existen centrales vinculadas</p>
+          </div>
+          <div
+            class="container"
+            *ngIf="centrals.length > 0"
+            style="width: 100%"
+          >
+            <ng-container *ngFor="let item of centrals" style="width: 100%">
+              <div class="btn-central" (click)="handleEditCentral(item)">
+                <img [src]="'../../assets/central.svg'" />
+                <p>{{ item.Description }}</p>
+                <img [src]="'../../assets/centralEdit.svg'" />
+              </div>
+            </ng-container>
+          </div>
+        </ion-row>
+      </div>
+      <div class="row">
+        <button class="btn-primary" (click)="handleShowModal()">
+          Añadir Central
+        </button>
+      </div>
+    </div>
+
+    <form
+      *ngIf="typeForm"
+      #form="ngForm"
+      (ngSubmit)="setup(form)"
+      method="post"
+    >
+      <div class="center">
+        <div
+          class="card"
+          [ngClass]="{'move' : typeForm === 'edit' || typeForm === 'create'}"
+        >
+          <div class="input-container">
+            <label for="description">Descripción</label>
+            <input
+              ngModel
+              type="text"
+              name="description"
+              id="description"
+              [(ngModel)]="description"
+              required
+            />
+          </div>
+          <div class="input-container" *ngIf="!isSMS">
+            <label for="identifier">Identificador</label>
+            <input
+              ngModel
+              type="text"
+              name="identifier"
+              id="identifier"
+              [(ngModel)]="identifier"
+              required
+            />
+          </div>
+          <div class="input-container" *ngIf="!isSMS">
+            <label for="pin">Código de Usuario</label>
+            <input
+              ngModel
+              type="text"
+              name="pin"
+              id="pin"
+              [pattern]="patternPin"
+              [(ngModel)]="pin"
+              required
+            />
+          </div>
+          <div class="input-container" *ngIf="isSMS">
+            <label for="phone">Número de teléfono</label>
+            <input
+              ngModel
+              type="number"
+              name="phone"
+              id="phone"
+              [(ngModel)]="phone"
+              required
+            />
+          </div>
+          <div class="input-container" *ngIf="isSMS">
+            <label for="pinSMS">Clave SMS</label>
+            <input
+              ngModel
+              type="number"
+              name="pinSMS"
+              id="pinSMS"
+              [(ngModel)]="pinSMS"
+              required
+            />
+            <label style="color: #832424" *ngIf="typeForm === 'edit' && isSMS "
+              >La clave no se modificará en la central.</label
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button
+          *ngIf="typeForm === 'edit' && !isSMS "
+          class="btn-primary unlink"
+          type="button"
+          (click)="handleUnlink()"
+        >
+          Desvincular
+        </button>
+      </div>
+
+      <div class="row">
+        <button
+          *ngIf="typeForm === 'edit' && isSMS "
+          class="btn-primary unlink"
+          type="button"
+          (click)="handleUnlinkSMS()"
+        >
+          Desvincular
+        </button>
+      </div>
+
+      <div class="row">
+        <button
+          *ngIf="typeForm === 'create' "
+          type="submit"
+          [disabled]="form.invalid"
+          class="btn-primary"
+        >
+          Añadir Central
+        </button>
+        <button
+          *ngIf="typeForm === 'edit' "
+          type="submit"
+          [disabled]="form.invalid"
+          class="btn-primary"
+        >
+          Actualizar
+        </button>
+        <button (click)="handleCancel()" class="btn-primary secondary">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </ion-grid>
+
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-container">
+      <h3>SELECCIONA EL TIPO DE CENTRAL</h3>
+      <button class="btn-modal" (click)="handleCreate('ip')">
+        <p>Central - IP</p>
+      </button>
+      <button class="btn-modal" (click)="handleCreate('sms')">
+        <p>Central - SMS</p>
+      </button>
+    </div>
+    <button (click)="handleCancel()" class="btn-primary secondary">
+      Cancelar
+    </button>
+  </div>
+
+  <div class="modal" *ngIf="showModalSMS">
+    <div class="modal-container">
+      <h3>SELECCIONA EL MODELO</h3>
+      <button class="btn-modal" (click)="handleSMS('cr800')">
+        <p>Modelo CR800</p>
+      </button>
+      <button class="btn-modal" (click)="handleSMS('cr832')">
+        <p>Modelo CR832</p>
+      </button>
+    </div>
+    <button (click)="handleCancel()" class="btn-primary secondary">
+      Cancelar
+    </button>
+  </div>
+
+  <div class="modal" *ngIf="showModalSMSRemove">
+    <div class="modal-container">
+      <h4>
+        ¿Está seguro de desvincular la central:
+        <span>{{central.Description}}</span>?
+      </h4>
+    </div>
+    <div class="row" style="margin-top: 0">
+      <button
+        (click)="confirmUnlinkSMS()"
+        class="btn-primary unlink"
+        style="margin-bottom: 20px"
+      >
+        Desvincular
+      </button>
+      <button (click)="handleCancelRemove()" class="btn-primary secondary">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="showModalRemove">
+    <div class="modal-container">
+      <h4>
+        ¿Está seguro de desvincular la central:
+        <span>{{central.Description}}</span>?
+      </h4>
+    </div>
+    <div class="row" style="margin-top: 0">
+      <button
+        (click)="confirmUnlink()"
+        class="btn-primary unlink"
+        style="margin-bottom: 20px"
+      >
+        Desvincular
+      </button>
+      <button (click)="handleCancelRemove()" class="btn-primary secondary">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</ion-content>

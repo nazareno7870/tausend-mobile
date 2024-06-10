@@ -1,0 +1,90 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Teléfonos de Contacto
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="column">
+    <div class="top center">
+      <button class="btn-selector" [routerLink]="['/selector']">
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+
+  <div class="center">
+    <div class="card">
+      <div class="input-container">
+        <label for="orderNumber">Número de orden ( 1 al 16 )</label>
+        <input
+          ngModel
+          type="number"
+          name="orderNumber"
+          id="orderNumber"
+          maxlength="2"
+          pattern="[1-9]{1}[0-6]{0,1}"
+          [ngClass]="{'input-ok': orderNumberOk}"
+          [(ngModel)]="orderNumber"
+          (ngModelChange)="orderNumber = changeOrder($event)"
+          required
+        />
+      </div>
+      <div class="type-container" style="margin-top: 10px">
+        <div
+          [ngClass]="{'checked': typeForm == 'write'}"
+          class="checkbox"
+          (click)="onClick('write')"
+        ></div>
+        <label>Ingresar número de telefono</label>
+      </div>
+      <div class="type-container">
+        <div
+          [ngClass]="{'checked': typeForm == 'read'}"
+          class="checkbox"
+          (click)="onClick('read')"
+        ></div>
+        <label>Leer número de telefono</label>
+      </div>
+      <div class="type-container">
+        <div
+          [ngClass]="{'checked': typeForm == 'delete'}"
+          class="checkbox"
+          (click)="onClick('delete')"
+        ></div>
+        <label>Borrar número de telefono</label>
+      </div>
+      <div
+        class="input-container"
+        *ngIf="typeForm == 'write'"
+        style="margin-top: 10px"
+      >
+        <label for="numberPhone">Número de teléfono del contacto</label>
+        <input
+          ngModel
+          type="tel"
+          name="numberPhone"
+          id="numberPhone"
+          [ngClass]="{'input-ok': numberPhoneOk}"
+          [(ngModel)]="numberPhone"
+          (ngModelChange)="numberPhone = changeNumber($event)"
+          required
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <button (click)="sendSMS();" class="btn-primary">Enviar</button>
+    <button
+      [routerDirection]="'root'"
+      routerLink="/home"
+      class="btn-primary secondary"
+    >
+      Cancelar
+    </button>
+  </div>
+</ion-content>

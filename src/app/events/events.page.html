@@ -1,0 +1,92 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Eventos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="height: 100%;">
+    <div class="top">
+      <button (click)="getEventsList()" class="btn-refresh">
+        <ion-icon
+        name="refresh"
+        style="min-width: 16px; min-height: 16px"
+      ></ion-icon>
+      </button>
+      <button class="btn-selector" [routerLink]="['/selector']" >
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+    
+    <ion-row class="ion-align-items-center ion-justify-content-center" *ngIf="loading" style="height: 100px;">
+      <ion-spinner color="light" name="crescent"></ion-spinner>
+    </ion-row>
+
+    <div class="center" *ngIf="!loading">
+      <div class="card">
+        <ion-row
+          *ngIf="!loading"
+          class="ion-align-items-center ion-justify-content-center"
+        >
+          <div class="container" *ngIf="events.length == 0">
+            <p>No existen eventos</p>
+          </div>
+          <div class="container" *ngIf="events.length > 0">
+            <div class="events" *ngFor="let item of events">
+              <h3>{{ item.StringDate }}</h3>
+              <p>{{ item.Text }}</p>
+            </div>
+          </div>
+          <!-- <ion-col *ngIf="failures.length > 0">
+            <ion-row>
+              <ion-list>
+                <ion-item *ngFor="let item of failures">
+                  <ion-label>
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.desc }}</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-row>
+          </ion-col> -->
+        </ion-row>
+      </div>
+    </div>
+    <div class="row">
+      <button [routerDirection]="'root'" routerLink="/home" class="btn-primary secondary">
+        Volver
+      </button>
+    </div>
+    <!-- <ion-row class="ion-align-items-center ion-justify-content-center" *ngIf="!loading">
+      <ion-col *ngIf="events.length == 0">
+        No existen eventos
+      </ion-col>
+      <ion-col *ngIf="events.length > 0">
+        <ion-list>
+          <ion-item *ngFor="let item of events" class="ion-text-wrap">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-label>{{ item.StringDate }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <span>{{ item.Text }}</span>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <br>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row> -->
+
+  </ion-grid>
+</ion-content>

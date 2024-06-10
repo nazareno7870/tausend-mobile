@@ -1,26 +1,262 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-item class="app-item" (click)="expandUser()">
+          <div
+            class="column"
+            style="
+              padding-top: 10px;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.37);
+              padding-bottom: 12px;
+            "
+          >
+            <div class="row">
+              <div class="row" style="justify-content: flex-start; gap: 30px">
+                <img src="../assets/profile.svg" />
+                <ion-label>{{ firstName }} {{ lastName }}</ion-label>
+              </div>
+              <img src="../assets/menuIcon.svg" />
+            </div>
+          </div>
+        </ion-item>
+      </ion-header>
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
-
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false">
+            <div>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/home"
+              >
+                <div class="item-menu" [ngClass]="{ active: path == '/home' }">
+                  <img src="../assets/menu/home.svg" />
+                  <ion-label> Acciones Principales </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/exclusions"
+                *ngIf="sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/exclusions' }"
+                >
+                  <img src="../assets/menu/zones.svg" />
+                  <ion-label> Exclusiones </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/scheduled-departures"
+                *ngIf="hasDevices && !sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/scheduled-departures' }"
+                >
+                  <img src="../assets/menu/scheduled.svg" />
+                  <ion-label> Salidas Programables </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+              class="app-item"
+              [routerDirection]="'root'"
+              routerLink="/scheduled-departures"
+              *ngIf="sms"
+            >
+              <div
+                class="item-menu"
+                [ngClass]="{ active: path == '/scheduled-departures' }"
+              >
+                <img src="../assets/menu/scheduled.svg" />
+                <ion-label> Salidas Programables </ion-label>
+              </div>
             </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/contact-phone"
+                *ngIf="sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/contact-phone' }"
+                >
+                  <img
+                    src="../assets/menu/phone.svg"
+                    style="max-height: 24px; padding-left: 2px"
+                  />
+                  <ion-label> Teléfonos de Contacto </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/custom-messages"
+                *ngIf="sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/custom-messages' }"
+                >
+                  <img src="../assets/menu/users.svg" />
+                  <ion-label> Mensaje Personalizados </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/identification"
+                *ngIf="sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/identification' }"
+                >
+                  <img src="../assets/menu/instalator.svg" />
+                  <ion-label> Identificación </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+              class="app-item"
+              [routerDirection]="'root'"
+              routerLink="/sms-password-change"
+              *ngIf="sms"
+            >
+              <div
+                class="item-menu"
+                [ngClass]="{ active: path == '/sms-password-change' }"
+              >
+                <img src="../assets/menu/sms.svg" />
+                <ion-label> Cambio de Clave SMS </ion-label>
+              </div>
+            </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/zones"
+                *ngIf="hasDevices && !sms"
+              >
+                <div class="item-menu" [ngClass]="{ active: path == '/zones' }">
+                  <img src="../assets/menu/zones.svg" />
+                  <ion-label> Zonas </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/failures"
+                *ngIf="hasDevices && !sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/failures' }"
+                >
+                  <img src="../assets/menu/failures.svg" />
+                  <ion-label> Fallas </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/events"
+                *ngIf="hasDevices && !sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/events' }"
+                >
+                  <img src="../assets/menu/events.svg" />
+                  <ion-label> Eventos </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/setup"
+              >
+                <div class="item-menu" [ngClass]="{ active: path == '/setup' }">
+                  <img src="../assets/menu/setup.svg" />
+                  <ion-label> Vincular Dispositivo </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/users-labels"
+                *ngIf="hasDevices && !sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/users-labels' }"
+                >
+                  <img src="../assets/menu/users.svg" />
+                  <ion-label> Etiquetas de Usuarios </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/clock"
+                *ngIf="hasDevices && !sms"
+              >
+                <div class="item-menu" [ngClass]="{ active: path == '/clock' }">
+                  <img src="../assets/menu/clock.svg" />
+                  <ion-label> Puesta en Hora </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/battery"
+                *ngIf="hasDevices && !sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/battery' }"
+                >
+                  <img src="../assets/menu/battery.svg" />
+                  <ion-label> Estado de Batería </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/instalator"
+                *ngIf="hasDevices && !sms"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/instalator' }"
+                >
+                  <img src="../assets/menu/instalator.svg" />
+                  <ion-label> Instalador </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
+                routerLink="/selector"
+                *ngIf="hasDevices"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/selector' }"
+                >
+                  <img src="../assets/menu/selector.svg" />
+                  <ion-label> Selector de Central </ion-label>
+                </div>
+              </ion-item>
+            </div>
+            <div class="center" style="margin-top: 20px">
+              <ion-label style="color: white">Versión: {{ version }}</ion-label>
+            </div>
           </ion-menu-toggle>
-        </ion-list>
-
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
-          </ion-item>
         </ion-list>
       </ion-content>
     </ion-menu>

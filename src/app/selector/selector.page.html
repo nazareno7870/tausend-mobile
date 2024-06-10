@@ -1,0 +1,66 @@
+<ion-content>
+  <ion-grid
+    style="
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    "
+  >
+    <div class="center" style="width: 100%; margin-top: -60px">
+      <div class="logo-container">
+        <img [src]="'../../assets/eagle.png'" />
+      </div>
+      <div class="card">
+        <ion-row
+          class="ion-align-items-center ion-justify-content-center"
+          style="width: 100%"
+        >
+          <div
+            class="container"
+            *ngIf="centrals.length == 0"
+            style="width: 100%"
+          >
+            <h2>SELECTOR DE CENTRAL</h2>
+            <p>No existen centrales vinculadas</p>
+          </div>
+          <div
+            class="container"
+            *ngIf="centrals.length > 0"
+            style="width: 100%"
+          >
+            <div class="tap" *ngIf="centrals.length > 4">
+              <img [src]="'../../assets/tap.svg'" />
+            </div>
+            <h2>SELECTOR DE CENTRAL</h2>
+            <div style="width: 100%" class="buttons-container">
+              <div *ngFor="let item of centrals" style="width: 100%">
+                <button class="btn-selector" (click)="handleCentral(item)">
+                  <img [src]="'../../assets/central.svg'" />
+                  <p>{{ item.Description }}</p>
+                  <img [src]="'../../assets/arrow.svg'" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </ion-row>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 20px">
+      <input
+        ngModel
+        type="text"
+        name="searchDevice"
+        id="searchDevice"
+        [(ngModel)]="searchDevice"
+        (ngModelChange)="searchDevice = searchDevices($event)"
+        placeholder="Buscar Central"
+      />
+    </div>
+    <div class="row" style="margin-top: 20px">
+      <button class="btn-primary" [routerLink]="['/setup']">
+        Añadir Central
+      </button>
+    </div>
+  </ion-grid>
+</ion-content>

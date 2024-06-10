@@ -1,0 +1,56 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center;">
+      Fallas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid style="height: 100%">
+    <div class="top">
+      <button (click)="getFailuresList()" class="btn-refresh">
+        <ion-icon
+        name="refresh"
+        style="min-width: 16px; min-height: 16px"
+      ></ion-icon>
+      </button>
+      <button class="btn-selector" [routerLink]="['/selector']" >
+        <img [src]="'../../assets/central.svg'" />
+        <p>{{ centralSelected }}</p>
+      </button>
+    </div>
+    <ion-row
+      *ngIf="loading"
+      class="ion-align-items-center ion-justify-content-center"
+      style="height: 325px"
+    >
+      <ion-spinner color="light" name="crescent"></ion-spinner>
+    </ion-row>
+    <div class="center" *ngIf="!loading">
+      <div class="card">
+        <ion-row
+          *ngIf="!loading"
+          class="ion-align-items-center ion-justify-content-center"
+        >
+          <div class="container" *ngIf="failures.length == 0">
+            <p>No existen fallas</p>
+          </div>
+          <div class="container" *ngIf="failures.length > 0">
+            <div class="failures" *ngFor="let item of failures">
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.desc }}</p>
+            </div>
+          </div>
+        </ion-row>
+      </div>
+    </div>
+    <div class="row">
+      <button [routerDirection]="'root'" routerLink="/home" class="btn-primary secondary">
+        Volver
+      </button>
+    </div>
+  </ion-grid>
+</ion-content>
