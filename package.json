@@ -71,6 +71,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "cordova-plugin-wifiwizard2": "^3.1.1",
+    "cordova-plugin-x-socialsharing": "^6.0.4",
     "cordova-sms-plugin": "^1.0.3",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
@@ -89,7 +90,8 @@
   "cordova": {
     "plugins": {
       "cordova-sms-plugin": {},
-      "wifiwizard2": {}
+      "wifiwizard2": {},
+      "cordova-plugin-x-socialsharing": {}
     }
   }
 }

@@ -241,6 +241,19 @@
               <ion-item
                 class="app-item"
                 [routerDirection]="'root'"
+                routerLink="/tcp"
+              >
+                <div
+                  class="item-menu"
+                  [ngClass]="{ active: path == '/tcp' }"
+                >
+                  <img src="../assets/menu/cmd.svg" />
+                  <ion-label> Acces Point </ion-label>
+                </div>
+              </ion-item>
+              <ion-item
+                class="app-item"
+                [routerDirection]="'root'"
                 routerLink="/selector"
                 *ngIf="hasDevices"
               >

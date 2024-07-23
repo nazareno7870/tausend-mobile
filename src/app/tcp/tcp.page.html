@@ -1,0 +1,153 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" type="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-transform: uppercase; margin: 0; text-align: center">
+      Acces Point
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="column" *ngIf="tcp">
+  <div class="center" style="margin: 20px 0">
+    <div class="card" style="margin-top: 0; gap: 0">
+      <p
+        style="
+          text-align: center;
+          color: #0d455c;
+          font-weight: 400;
+          font-size: 13px;
+        "
+      >
+        Poner el equipo en Acces Point, buscar la red del equipo y conectarse.
+      </p>
+      <div class="top" style="margin: 10px">
+        <button class="btn-selector" (click)="handleWifi()">
+          <img [src]="'../../assets/wifi.svg'" />
+          <p>{{ currentSSID }}</p>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="center">
+    <div class="card" *ngIf="!connected" style="margin-top: 0">
+      <p
+        style="
+          text-align: center;
+          color: #0d455c;
+          font-weight: 400;
+          font-size: 13px;
+        "
+      >
+        Una vez conectado éste dispositivo a la redl del equipo conecte la App al equipo.
+      </p>
+      <form #form="ngForm" (ngSubmit)="connect(form)" method="post">
+        <div class="input-container">
+          <label class="label" for="ip">Dirección IP Remota</label>
+          <input
+            ngModel
+            [(ngModel)]="ip"
+            id="ip"
+            type="text"
+            name="ip"
+            class="input"
+            required
+          />
+        </div>
+        <div class="spacer"></div>
+        <div class="input-container">
+          <label class="label" for="port">Puerto Remoto</label>
+          <input
+            ngModel
+            [(ngModel)]="port"
+            id="port"
+            type="number"
+            name="port"
+            class="input"
+            required
+          />
+        </div>
+        <div class="center">
+          <button class="btn-primary-top">Conectar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="center">
+    <div class="card" *ngIf="connected" style="margin-top: 10px">
+      <textarea
+        ngModel
+        id="displayedCommand"
+        name="displayedCommand"
+        class="textarea"
+        rows="10"
+        [(ngModel)]="displayedCommand"
+        disabled
+      ></textarea>
+      <form
+        style="display: flex; gap: 12px"
+        #form="ngForm"
+        (ngSubmit)="sendCommand(form)"
+        method="post"
+      >
+        <div class="input-container">
+          <label class="label" for="command">Command</label>
+          <input ngModel type="text" name="command" class="input" required />
+        </div>
+        <button class="btn-primary-top" style="padding: 8px">
+          <img [src]="'../../assets/send.svg'" />
+        </button>
+      </form>
+      <div class="center" style="display: flex; flex-direction: row; gap: 10px">
+        <button
+          (click)="showModalTCPWifi()"
+          class="btn-primary"
+          style="margin-bottom: 0"
+        >
+          Conectar a WIFI
+        </button>
+        <button
+          (click)="closeTcp()"
+          class="btn-primary"
+          style="margin-bottom: 0;background: #34a96c;"
+          *ngIf="wifiCommanSended"
+        >
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-content class="column" *ngIf="!tcp">
+  <div class="center">
+    <div class="card">
+      <ion-row
+        class="ion-align-items-center ion-justify-content-center"
+        style="width: 100%"
+      >
+        <div class="container" *ngIf="networks.length == 0" style="width: 100%">
+          <h2>SELECTOR DE RED</h2>
+          <p>No se encontraron redes disponibles</p>
+        </div>
+        <div class="container" *ngIf="networks.length > 0" style="width: 100%">
+          <div class="tap" *ngIf="networks.length > 6">
+            <img [src]="'../../assets/tap.svg'" />
+          </div>
+          <h2>SELECTOR DE RED</h2>
+          <div style="width: 100%" class="buttons-container">
+            <div *ngFor="let item of networks" style="width: 100%">
+              <button class="btn-selector-2" (click)="handleNetwork(item)">
+                <img [src]="'../../assets/wifi2.svg'" />
+                <p>{{ item.SSID }} {{ item.frequency }} MHz</p>
+              </button>
+            </div>
+          </div>
+        </div>
+      </ion-row>
+    </div>
+  </div>
+  <div class="row">
+    <button (click)="handleTcp()" class="btn-primary secondary">Volver</button>
+  </div>
+</ion-content>

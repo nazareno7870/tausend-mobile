@@ -29,6 +29,12 @@
             style="width: 100%"
           >
             <p>No existen centrales vinculadas</p>
+            <button class="btn-primary" (click)="handleShowModal()">
+              Añadir Central
+            </button>
+            <button class="btn-primary" routerLink="/tcp" style="background: #34a96c;">
+              Conectar TCP
+            </button>
           </div>
           <div
             class="container"
@@ -45,7 +51,7 @@
           </div>
         </ion-row>
       </div>
-      <div class="row">
+      <div *ngIf="centrals.length > 0" class="row">
         <button class="btn-primary" (click)="handleShowModal()">
           Añadir Central
         </button>

@@ -145,16 +145,15 @@ export class ApiService {
       }
       this.setHeaders(timeout);
       return new Observable((obs) => {
-        next: (body: any) =>
-          this.setBody(body).subscribe(
-            (body2) => {
-              this.http.post(completeUrl, body2, this.httpOptions).subscribe(
-                (res) => obs.next(res),
-                (err) => obs.error(err)
-              );
-            },
-            (err) => obs.error(err)
-          );
+        this.setBody(body as any).subscribe(
+          (body2) => {
+            this.http.post(completeUrl, body2, this.httpOptions).subscribe(
+              (res) => obs.next(res),
+              (err) => obs.error(err)
+            );
+          },
+          (err) => obs.error(err)
+        );
       });
     } else {
       return new Observable((obs) =>

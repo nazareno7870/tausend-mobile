@@ -104,6 +104,10 @@ const routes: Routes = [
   {
     path: 'user-account',
     loadChildren: () => import('./user-account/user-account.module').then( m => m.UserAccountPageModule)
+  },
+  {
+    path: 'tcp',
+    loadChildren: () => import('./tcp/tcp.module').then( m => m.TcpPageModule)
   }
 
 ];

@@ -5,7 +5,7 @@
 export const environment = {
   apiUrl: "https://tausend.wearelomo.com",
   production: false,
-  version: "0.1.37"
+  version: "0.1.39"
 };
 
 /*
