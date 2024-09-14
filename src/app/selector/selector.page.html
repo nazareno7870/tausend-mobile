@@ -21,7 +21,7 @@
             *ngIf="centrals.length == 0"
             style="width: 100%"
           >
-            <h2>SELECTOR DE CENTRAL</h2>
+            <h2>SELECTOR DE EQUIPO</h2>
             <p>No existen centrales vinculadas</p>
           </div>
           <div
@@ -32,7 +32,7 @@
             <div class="tap" *ngIf="centrals.length > 4">
               <img [src]="'../../assets/tap.svg'" />
             </div>
-            <h2>SELECTOR DE CENTRAL</h2>
+            <h2>SELECTOR DE EQUIPO</h2>
             <div style="width: 100%" class="buttons-container">
               <div *ngFor="let item of centrals" style="width: 100%">
                 <button class="btn-selector" (click)="handleCentral(item)">
@@ -54,12 +54,12 @@
         id="searchDevice"
         [(ngModel)]="searchDevice"
         (ngModelChange)="searchDevice = searchDevices($event)"
-        placeholder="Buscar Central"
+        placeholder="Buscar equipo"
       />
     </div>
     <div class="row" style="margin-top: 20px">
       <button class="btn-primary" [routerLink]="['/setup']">
-        Añadir Central
+        Añadir Equipo
       </button>
     </div>
   </ion-grid>

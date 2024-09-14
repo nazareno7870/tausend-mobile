@@ -9,6 +9,7 @@ import { CapacitorWifiConnect } from '@falconeta/capacitor-wifi-connect';
 import { Socket } from '@spryrocks/capacitor-socket-connection-plugin';
 import { NgForm } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 interface Network {
   level: string;
   SSID: string;
@@ -52,6 +53,7 @@ export class TcpPage implements OnInit {
     private loadingController: LoadingController,
     private authService: AuthService,
     private wifiWizard2: WifiWizard2,
+    private router: Router,
     private ref: ChangeDetectorRef
   ) {}
 
@@ -139,13 +141,59 @@ export class TcpPage implements OnInit {
   }
 
   changeDisplayCommand(command: string) {
-    this.displayedCommand += !this.displayedCommand ? command : '\n' + command;
+    this.displayedCommand = !this.displayedCommand
+      ? command
+      : command + '\n' + this.displayedCommand;
     this.ref.detectChanges();
   }
 
   closeTcp() {
-    this.connected = false;
-    this.ref.detectChanges();
+    let header: string;
+    header = 'Finalizar Acces Point';
+    this.alertController
+      .create({
+        mode: 'ios',
+        header: header,
+        message: `Para finalizar sacar el equipo de Access Point.
+Espere unos segundos hasta que el equipo se conecte al servidor.
+En ese caso puede vincular el dispositivo a su cuenta.
+En el caso que no se conecte, vuelva a poner el equipo en Access Point y verifique el nombre de red y contraseña.`,
+        buttons: [
+          {
+            text: 'Ok',
+            handler: async () => {
+              this.connected = false;
+              this.ref.detectChanges();
+              this.router.navigate(['/setup']);
+            },
+          },
+        ],
+      })
+      .then((alert) => {
+        alert.present();
+        const userNumberInput: any = document.getElementById('userNumberInput');
+        userNumberInput.addEventListener('keydown', (ev: any) => {
+          const input = ev.target as HTMLInputElement;
+          const key = ev.key;
+          const regex = /^[0-9]*$/g; // Only digits regex
+          const arrValid = [
+            'Backspace',
+            'Delete',
+            'Tab',
+            'ArrowLeft',
+            'ArrowRight',
+            'Home',
+            'End',
+            'Shift',
+          ];
+          if (!arrValid.includes(key) && !key.match(regex)) {
+            ev.preventDefault();
+          }
+          if (input.value.length >= 3 && !arrValid.includes(key)) {
+            ev.preventDefault();
+          }
+        });
+      });
   }
 
   async connect(form: NgForm) {
@@ -177,14 +225,24 @@ export class TcpPage implements OnInit {
     }, 2000);
   }
   async sendCommand(form: NgForm) {
-    this.socket.write(
-      Uint8Array.of(
-        ...form.value.command
-          .split('')
-          .map((letter: string) => letter.charCodeAt(0)),
-        0x0d
+    let comand = form.value.command;
+    if (comand[comand.length - 1] == ' ')
+      comand = comand.substring(0, comand.length - 1);
+    this.socket
+      .write(
+        Uint8Array.of(
+          ...comand.split('').map((letter: string) => letter.charCodeAt(0)),
+          0x0d
+        )
       )
-    );
+      .catch((err) => {
+        this.alertService.alertToast(
+          'No se pudo enviar el comando, se perdió la conexión con el equipo'
+        );
+        this.socket.close();
+        this.connected = false;
+        this.ref.detectChanges();
+      });
     this.command = '';
     form.resetForm();
   }
@@ -202,6 +260,8 @@ export class TcpPage implements OnInit {
       .create({
         mode: 'ios',
         header: header,
+        message:
+          'Si Ud. Cambió el código de instalador cambie el valor por defecto',
         inputs: inputs,
         buttons: [
           { text: 'Cancelar', role: 'cancel' },
@@ -271,7 +331,7 @@ export class TcpPage implements OnInit {
   public async showModalTCPWifi() {
     let header: string;
     let inputs: any[] = [];
-    header = 'Conectar central a wifi';
+    header = 'Configurar nombre de red y contraseña';
     inputs.push({
       placeholder: 'Nombre de red - PRG350:',
       type: 'text',
@@ -299,27 +359,52 @@ export class TcpPage implements OnInit {
               });
               await loading.present();
               if (data.passwordTcpWifi && data.nameTCPWifi) {
-                this.passwordTcpWifi = data.password;
+                this.passwordTcpWifi = data.passwordTcpWifi;
                 this.namedTcpWifi = data.nameTCPWifi;
-                const commandName = 'PRG350:' + data.nameTCPWifi.trim();
-                const commandPassword = 'PRG351:' + data.passwordTcpWifi.trim();
-                this.socket.write(
-                  Uint8Array.of(
-                    ...commandName
-                      .split('')
-                      .map((letter: string) => letter.charCodeAt(0)),
-                    0x0d
-                  )
-                );
-                setTimeout(() => {
-                  this.socket.write(
+                let pass = data.passwordTcpWifi;
+                let name = data.nameTCPWifi;
+                // clean de space in the end of string
+                if (pass[pass.length - 1] == ' ')
+                  pass = pass.substring(0, pass.length - 1);
+                if (name[name.length - 1] == ' ')
+                  name = name.substring(0, name.length - 1);
+                const commandName = 'PRG350:' + name;
+                const commandPassword = 'PRG351:' + pass;
+                this.socket
+                  .write(
                     Uint8Array.of(
-                      ...commandPassword
+                      ...commandName
                         .split('')
                         .map((letter: string) => letter.charCodeAt(0)),
                       0x0d
                     )
-                  );
+                  )
+                  .catch((err) => {
+                    this.alertService.alertToast(
+                      'No se pudo enviar el comando, se perdió la conexión con el equipo'
+                    );
+                    this.socket.close();
+                    this.connected = false;
+                    this.ref.detectChanges();
+                  });
+                setTimeout(() => {
+                  this.socket
+                    .write(
+                      Uint8Array.of(
+                        ...commandPassword
+                          .split('')
+                          .map((letter: string) => letter.charCodeAt(0)),
+                        0x0d
+                      )
+                    )
+                    .catch((err) => {
+                      this.alertService.alertToast(
+                        'No se pudo enviar el comando, se perdió la conexión con el equipo'
+                      );
+                      this.socket.close();
+                      this.connected = false;
+                      this.ref.detectChanges();
+                    });
                   this.wifiCommanSended = true;
                   loading.dismiss();
                 }, 1000);

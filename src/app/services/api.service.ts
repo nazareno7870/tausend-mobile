@@ -59,7 +59,7 @@ export class ApiService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               obs.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular dispositivo"'
               );
             } else {
               body['DeviceId'] = user.Devices[user.DeviceSelected].DeviceId;

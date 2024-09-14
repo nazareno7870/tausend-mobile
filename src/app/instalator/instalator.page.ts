@@ -39,7 +39,7 @@ export class InstalatorPage implements OnInit {
   }
 
   /**
-   * Get central selected
+   * Get equipo selected
    */
   private getCentralSelected() {
     this.storage.get("currentUser").then((user) => {
@@ -60,7 +60,7 @@ export class InstalatorPage implements OnInit {
           this.hasPassword = true;
         } else {
           this.alertService.alertToast(
-            "Problema al comunicarse con la central"
+            "Problema al comunicarse con el equipo"
           );
         }
         loading.dismiss();
@@ -72,7 +72,7 @@ export class InstalatorPage implements OnInit {
           this.authService.onPasswordChanged();
         } else {
           this.alertService.alertToast(
-            "Problema al comunicarse con la central"
+            "Problema al comunicarse con el equipo"
           );
         }
       }
@@ -134,7 +134,7 @@ export class InstalatorPage implements OnInit {
               msg = "El codigo ingresado es inválido";
               break;
             case "DISCONNECTED":
-              msg = "Problema al comunicarse con la Central";
+              msg = "Problema al comunicarse con el equipo";
               break;
             default:
               msg = res.Text;
@@ -143,7 +143,7 @@ export class InstalatorPage implements OnInit {
           this.code = msg;
         } else {
           if (res.Code == 6) {
-            this.code = "Problema al comunicarse con la Central";
+            this.code = "Problema al comunicarse con el equipo";
           } else {
             this.alertService.alertToast(res.Message);
           }

@@ -48,7 +48,7 @@ export class ZonesPage implements OnInit {
   }
 
   /**
-   * Get central selected
+   * Get equipo selected
    */
   private getCentralSelected() {
     this.storage.get('currentUser').then((user) => {

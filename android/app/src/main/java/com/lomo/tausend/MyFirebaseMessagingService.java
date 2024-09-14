@@ -36,11 +36,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .build());
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(channel);
+
+                String defaultChannelId = "default_channel_id";
+    String defaultChannelName = "Default Channel";
+    int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+    NotificationChannel defaultChannel = new NotificationChannel(defaultChannelId, defaultChannelName, importance);
+
+    // Configura las propiedades del canal (sin sonido personalizado)
+    defaultChannel.setDescription("Canal por defecto para notificaciones generales");
+
+    NotificationManager notificationManager2 = getSystemService(NotificationManager.class);
+    notificationManager2.createNotificationChannel(defaultChannel);
         }
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "my_channel_id")
+      // write in console the channel id
+        System.out.println( "Channel id: " + remoteMessage.getNotification().getChannelId());
+
+        // Create notification builder if the channel id exists or if it doesn't exist use de default one
+        if(remoteMessage.getNotification().getChannelId().equals("my_channel_id")) {
+                  NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "my_channel_id")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(remoteMessage.getNotification().getTitle())
                 .setContentText(remoteMessage.getNotification().getBody())
@@ -49,5 +66,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
+        } else {
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "default_channel_id")
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setContentTitle(remoteMessage.getNotification().getTitle())
+                    .setContentText(remoteMessage.getNotification().getBody())
+                    .setAutoCancel(true);
+            NotificationManager notificationManager2 = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager2.notify(0, notificationBuilder.build());
+        }
     }
 }

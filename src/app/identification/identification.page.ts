@@ -25,7 +25,7 @@ export class IdentificationPage implements OnInit {
     this.getCentralSelected();
   }
   /**
-   * Get central selected
+   * Get equipo selected
    */
   private getCentralSelected() {
     this.storage.get("currentUser").then((user) => {

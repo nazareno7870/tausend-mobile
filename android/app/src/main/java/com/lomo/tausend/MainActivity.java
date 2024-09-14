@@ -29,6 +29,18 @@ public class MainActivity extends BridgeActivity {
                     .build());
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+
+                String defaultChannelId = "default_channel_id";
+    String defaultChannelName = "Default Channel";
+    int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+    NotificationChannel defaultChannel = new NotificationChannel(defaultChannelId, defaultChannelName, importance);
+
+    // Configura las propiedades del canal (sin sonido personalizado)
+    defaultChannel.setDescription("Canal por defecto para notificaciones generales");
+
+    NotificationManager notificationManager2 = getSystemService(NotificationManager.class);
+    notificationManager2.createNotificationChannel(defaultChannel);
         }
     }
 }

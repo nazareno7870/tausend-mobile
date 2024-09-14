@@ -37,7 +37,7 @@ export class SetupPage implements OnInit {
   public modelSMSCentral: string = '';
   public showModalSMSRemove: boolean = false;
   public showModalRemove: boolean = false;
-  public central: any = {};
+  public equipo: any = {};
   public patternPin = /^[0-9]{4}$/;
   // private user: AccountDTO;
 
@@ -62,7 +62,7 @@ export class SetupPage implements OnInit {
     this.showModalSMSRemove = false;
     this.showModalRemove = false;
     this.modelSMSCentral = '';
-    this.central = {};
+    this.equipo = {};
   }
 
   ionViewWillEnter() {
@@ -75,7 +75,7 @@ export class SetupPage implements OnInit {
     this.showModalSMSRemove = false;
     this.showModalRemove = false;
     this.modelSMSCentral = '';
-    this.central = {};
+    this.equipo = {};
     var strRetrys = window.localStorage.getItem('linkRetrys');
     this.retrys = strRetrys ? +strRetrys : 0;
     this.getCentrals();
@@ -141,14 +141,14 @@ export class SetupPage implements OnInit {
     this.pinSMS = '';
     this.showModal = false;
     this.modelSMSCentral = '';
-    this.central = {};
+    this.equipo = {};
   }
 
   handleSMS(model: string) {
     this.isSMS = true;
     this.typeForm = 'create';
     this.description = '';
-    this.central = {};
+    this.equipo = {};
     this.identifier = '';
     this.pin = null;
     this.phone = '';
@@ -169,7 +169,7 @@ export class SetupPage implements OnInit {
     this.showModal = false;
     this.showModalSMS = false;
     this.modelSMSCentral = '';
-    this.central = {};
+    this.equipo = {};
   }
 
   handleUnlinkSMS() {
@@ -185,25 +185,25 @@ export class SetupPage implements OnInit {
     this.showModalRemove = false;
   }
 
-  handleEditCentral(central: any) {
+  handleEditCentral(equipo: any) {
     this.storage.set('currentUser', {
       ...this.user,
-      DeviceSelected: central.index,
+      DeviceSelected: equipo.index,
     });
-    this.central = central;
+    this.equipo = equipo;
     this.typeForm = 'edit';
-    this.isSMS = central.isSMS;
-    this.description = central.Description;
-    this.centralSelected = central.Description;
-    if (central.isSMS) {
-      this.modelSMSCentral = central.DeviceType;
-      this.pinSMS = central.SimPin;
-      this.phone = central.PhoneNumber;
-      this.identifier = central.Identifier;
-      this.pin = central.DevicePin;
+    this.isSMS = equipo.isSMS;
+    this.description = equipo.Description;
+    this.centralSelected = equipo.Description;
+    if (equipo.isSMS) {
+      this.modelSMSCentral = equipo.DeviceType;
+      this.pinSMS = equipo.SimPin;
+      this.phone = equipo.PhoneNumber;
+      this.identifier = equipo.Identifier;
+      this.pin = equipo.DevicePin;
     } else {
-      this.identifier = central.Mac;
-      this.pin = central.Pin;
+      this.identifier = equipo.Mac;
+      this.pin = equipo.Pin;
     }
   }
 
@@ -212,7 +212,7 @@ export class SetupPage implements OnInit {
       mode: 'ios',
       header: 'Atención',
       message:
-        'Se cerrará sesión automáticamente luego de desvincular el dispositivo.',
+        'Se cerrará sesión automáticamente luego de desvincular el equipo.',
       buttons: [
         {
           text: 'Cancelar',
@@ -232,13 +232,13 @@ export class SetupPage implements OnInit {
             await loading.present();
             this.appService
               .unlinkDevice({
-                DeviceId: this.central.DeviceId,
+                DeviceId: this.equipo.DeviceId,
               })
               .subscribe(
                 (data: any) => {
                   if (data && data.Code == 0) {
                     this.alertService.presentToast(
-                      'Dispositivo desvinculado con éxito'
+                      'Equipo desvinculado con éxito'
                     );
 
                     //this.router.navigate(['/home']);
@@ -249,7 +249,7 @@ export class SetupPage implements OnInit {
                 (err: any) => {
                   loading.dismiss();
                   this.alertService.alertToast(
-                    'Ocurrió un error desvinculando el dispositivo, por favor intentelo nuevamente.'
+                    'Ocurrió un error desvinculando el equipo, por favor intentelo nuevamente.'
                   );
                   console.log(err);
                 }
@@ -268,7 +268,7 @@ export class SetupPage implements OnInit {
       mode: 'ios',
       header: 'Atención',
       message:
-        'Se cerrará sesión automáticamente luego de desvincular el dispositivo.',
+        'Se cerrará sesión automáticamente luego de desvincular el equipo.',
       buttons: [
         {
           text: 'Cancelar',
@@ -288,13 +288,13 @@ export class SetupPage implements OnInit {
             await loading.present();
             this.smsService
               .unlinkDevice({
-                idDevice: this.central.DeviceId,
+                idDevice: this.equipo.DeviceId,
               })
               .subscribe(
                 (data: any) => {
                   if (data && data.Code == 0) {
                     this.alertService.presentToast(
-                      'Dispositivo desvinculado con éxito'
+                      'equipo desvinculado con éxito'
                     );
 
                     //this.router.navigate(['/home']);
@@ -305,7 +305,7 @@ export class SetupPage implements OnInit {
                 (err: any) => {
                   loading.dismiss();
                   this.alertService.alertToast(
-                    'Ocurrió un error desvinculando el dispositivo, por favor intentelo nuevamente.'
+                    'Ocurrió un error desvinculando el equipo, por favor intentelo nuevamente.'
                   );
                   console.log(err);
                 }
@@ -330,7 +330,7 @@ export class SetupPage implements OnInit {
         mode: 'ios',
         header: 'Atención',
         message:
-          'Se cerrará sesión automáticamente luego de actualizar el dispositivo.',
+          'Se cerrará sesión automáticamente luego de actualizar el equipo.',
         buttons: [
           {
             text: 'Cancelar',
@@ -360,7 +360,7 @@ export class SetupPage implements OnInit {
                     (data: any) => {
                       if (data && data.Code == 0) {
                         this.alertService.presentToast(
-                          'Dispositivo actualizado con éxito'
+                          'Equipo actualizado con éxito'
                         );
 
                         //this.router.navigate(['/home']);
@@ -405,7 +405,7 @@ export class SetupPage implements OnInit {
                           .then((al) => al.present());
                       } else {
                         this.alertService.alertToast(
-                          'Ocurrió un error actualizando el dispositivo, por favor intentelo nuevamente.'
+                          'Ocurrió un error actualizando el equipo, por favor intentelo nuevamente.'
                         );
                       }
                       loading.dismiss();
@@ -449,7 +449,7 @@ export class SetupPage implements OnInit {
                       (data: any) => {
                         if (data && data.Code == 0) {
                           this.alertService.presentToast(
-                            'Dispositivo vinculado con éxito'
+                            'Equipo vinculado con éxito'
                           );
 
                           //this.router.navigate(['/home']);
@@ -461,7 +461,7 @@ export class SetupPage implements OnInit {
                       (err: any) => {
                         loading.dismiss();
                         this.alertService.alertToast(
-                          'Ocurrió un error actualizando el dispositivo, por favor intentelo nuevamente.'
+                          'Ocurrió un error actualizando el equipo, por favor intentelo nuevamente.'
                         );
                         console.log(err);
                       }
@@ -469,7 +469,7 @@ export class SetupPage implements OnInit {
                 } else if (this.typeForm === 'edit') {
                   this.smsService
                     .updateDevice({
-                      idDevice: this.central.DeviceId,
+                      idDevice: this.equipo.DeviceId,
                       description: form.value.description,
                       identifier: this.modelSMSCentral,
                       pin: form.value.pinSMS,
@@ -481,7 +481,7 @@ export class SetupPage implements OnInit {
                       (data: any) => {
                         if (data && data.Code == 0) {
                           this.alertService.presentToast(
-                            'Dispositivo actualizado con éxito'
+                            'Equipo actualizado con éxito'
                           );
 
                           //this.router.navigate(['/home']);
@@ -493,7 +493,7 @@ export class SetupPage implements OnInit {
                       (err: any) => {
                         loading.dismiss();
                         this.alertService.alertToast(
-                          'Ocurrió un error actualizando el dispositivo, por favor intentelo nuevamente.'
+                          'Ocurrió un error actualizando el equipo, por favor intentelo nuevamente.'
                         );
                         console.log(err);
                       }

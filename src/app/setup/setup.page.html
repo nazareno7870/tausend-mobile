@@ -4,7 +4,7 @@
       <ion-menu-button style="color: white" type="light"></ion-menu-button>
     </ion-buttons>
     <ion-title style="text-transform: uppercase; margin: 0; text-align: center">
-      Vincular Dispositivo
+      Vincular Equipo
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -30,10 +30,10 @@
           >
             <p>No existen centrales vinculadas</p>
             <button class="btn-primary" (click)="handleShowModal()">
-              Añadir Central
+              Añadir Equipo
             </button>
             <button class="btn-primary" routerLink="/tcp" style="background: #34a96c;">
-              Conectar TCP
+              Conectar Access Point
             </button>
           </div>
           <div
@@ -53,7 +53,7 @@
       </div>
       <div *ngIf="centrals.length > 0" class="row">
         <button class="btn-primary" (click)="handleShowModal()">
-          Añadir Central
+          Añadir Equipo
         </button>
       </div>
     </div>
@@ -125,7 +125,7 @@
               required
             />
             <label style="color: #832424" *ngIf="typeForm === 'edit' && isSMS "
-              >La clave no se modificará en la central.</label
+              >La clave no se modificará en el equipo.</label
             >
           </div>
         </div>
@@ -159,7 +159,7 @@
           [disabled]="form.invalid"
           class="btn-primary"
         >
-          Añadir Central
+          Añadir Equipo
         </button>
         <button
           *ngIf="typeForm === 'edit' "
@@ -178,12 +178,12 @@
 
   <div class="modal" *ngIf="showModal">
     <div class="modal-container">
-      <h3>SELECCIONA EL TIPO DE CENTRAL</h3>
+      <h3>SELECCIONA EL TIPO DE EQUIPO</h3>
       <button class="btn-modal" (click)="handleCreate('ip')">
-        <p>Central - IP</p>
+        <p>Equipo - IP</p>
       </button>
       <button class="btn-modal" (click)="handleCreate('sms')">
-        <p>Central - SMS</p>
+        <p>Equipo - SMS</p>
       </button>
     </div>
     <button (click)="handleCancel()" class="btn-primary secondary">
@@ -209,8 +209,8 @@
   <div class="modal" *ngIf="showModalSMSRemove">
     <div class="modal-container">
       <h4>
-        ¿Está seguro de desvincular la central:
-        <span>{{central.Description}}</span>?
+        ¿Está seguro de desvincular el equipo:
+        <span>{{equipo.Description}}</span>?
       </h4>
     </div>
     <div class="row" style="margin-top: 0">
@@ -230,8 +230,8 @@
   <div class="modal" *ngIf="showModalRemove">
     <div class="modal-container">
       <h4>
-        ¿Está seguro de desvincular la central:
-        <span>{{central.Description}}</span>?
+        ¿Está seguro de desvincular el equipo:
+        <span>{{equipo.Description}}</span>?
       </h4>
     </div>
     <div class="row" style="margin-top: 0">

@@ -64,7 +64,7 @@ export class LoginPage implements OnInit {
                   .create({
                     mode: 'ios',
                     header: 'Atención',
-                    message: `El PIN utilizado de la central: ${data.RemovedDevices[0].Description} ya no es válido, por favor vuelva a vincularse a la central`,
+                    message: `El PIN utilizado de el equipo: ${data.RemovedDevices[0].Description} ya no es válido, por favor vuelva a vincularse a el equipo`,
                     buttons: ['Aceptar'],
                   })
                   .then((alrt) => alrt.present());
@@ -75,7 +75,7 @@ export class LoginPage implements OnInit {
                 this.alertController.create({
                   mode: 'ios',
                   header: 'Atención',
-                  message: `El PIN utilizado de las centrales: ${centrals} ya no es válido, por favor vuelva a vincularse a las centrales`,
+                  message: `El PIN utilizado de los equipos: ${centrals} ya no es válido, por favor vuelva a vincularse a las centrales`,
                   buttons: ['Aceptar'],
                 });
               }

@@ -15,7 +15,7 @@ export class SmsPasswordChangePage implements OnInit {
   public secondPasswordSMS: number | null = null;
   public secondPasswordSMSOk: boolean = false;
   centralSelected: string = '';
-  public central: any = {};
+  public equipo: any = {};
   public showModal: boolean = false;
 
   constructor(
@@ -37,7 +37,7 @@ export class SmsPasswordChangePage implements OnInit {
     this.secondPasswordSMSOk = false;
   }
   /**
-   * Get central selected
+   * Get equipo selected
    */
   private getCentralSelected() {
     this.storage.get('currentUser').then((user) => {
@@ -45,7 +45,7 @@ export class SmsPasswordChangePage implements OnInit {
         user.SMSDevices &&
         user.SMSDevices[user.DeviceSelected ? user.DeviceSelected : 0]
           .Description;
-      this.central =
+      this.equipo =
         user.SMSDevices &&
         user.SMSDevices[user.DeviceSelected ? user.DeviceSelected : 0];
     });
@@ -104,18 +104,18 @@ export class SmsPasswordChangePage implements OnInit {
 
     this.smsService
       .updateDevice({
-        idDevice: this.central.DeviceId,
-        description: this.central.Description,
-        identifier: this.central.Identifier,
-        pin: this.central.DevicePin,
-        phoneNumber: this.central.PhoneNumber,
+        idDevice: this.equipo.DeviceId,
+        description: this.equipo.Description,
+        identifier: this.equipo.Identifier,
+        pin: this.equipo.DevicePin,
+        phoneNumber: this.equipo.PhoneNumber,
         pinSMS: this.passwordSMS ? this.passwordSMS.toString() : '',
-        modelSMS: this.central.DeviceType,
+        modelSMS: this.equipo.DeviceType,
       })
       .subscribe(
         (data: any) => {
           if (data && data.Code == 0) {
-            this.alertService.presentToast('Dispositivo actualizado con éxito');
+            this.alertService.presentToast('equipo actualizado con éxito');
 
             //this.router.navigate(['/home']);
             this.authService.logout();
@@ -125,7 +125,7 @@ export class SmsPasswordChangePage implements OnInit {
         (err: any) => {
           loading.dismiss();
           this.alertService.alertToast(
-            'Ocurrió un error actualizando el dispositivo, por favor intentelo nuevamente.'
+            'Ocurrió un error actualizando el equipo, por favor intentelo nuevamente.'
           );
           console.log(err);
         }

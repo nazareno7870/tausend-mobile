@@ -4,7 +4,7 @@
       <ion-menu-button style="color: white" type="light"></ion-menu-button>
     </ion-buttons>
     <ion-title style="text-transform: uppercase; margin: 0; text-align: center">
-      Acces Point
+      Access Point
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,11 +20,11 @@
           font-size: 13px;
         "
       >
-        Poner el equipo en Acces Point, buscar la red del equipo y conectarse.
+        Poner el equipo en Access Point, buscar la red del equipo y conectarse.
       </p>
       <div class="top" style="margin: 10px">
         <button class="btn-selector" (click)="handleWifi()">
-          <img [src]="'../../assets/wifi.svg'" />
+          <img [src]="'../../assets/wifi.svg'" style="height: 20px" />
           <p>{{ currentSSID }}</p>
         </button>
       </div>
@@ -40,7 +40,8 @@
           font-size: 13px;
         "
       >
-        Una vez conectado éste dispositivo a la redl del equipo conecte la App al equipo.
+        Una vez conectado éste dispositivo a la red del equipo conecte la App al
+        equipo.
       </p>
       <form #form="ngForm" (ngSubmit)="connect(form)" method="post">
         <div class="input-container">
@@ -81,7 +82,7 @@
         id="displayedCommand"
         name="displayedCommand"
         class="textarea"
-        rows="10"
+        rows="6"
         [(ngModel)]="displayedCommand"
         disabled
       ></textarea>
@@ -103,20 +104,32 @@
         <button
           (click)="showModalTCPWifi()"
           class="btn-primary"
-          style="margin-bottom: 0"
+          style="margin-bottom: 0; font-size: 14px;"
         >
-          Conectar a WIFI
+          Configurar nombre de red y contraseña
         </button>
         <button
           (click)="closeTcp()"
           class="btn-primary"
-          style="margin-bottom: 0;background: #34a96c;"
-          *ngIf="wifiCommanSended"
+          style="margin-bottom: 0; background: #34a96c"
         >
-          Volver
+          Finalizar
         </button>
       </div>
     </div>
+  </div>
+  <div
+    class="center"
+    style="display: flex; flex-direction: row; gap: 10px; margin-top: 10px"
+  >
+    <button
+      class="btn-primary"
+      style="margin-bottom: 0; background: #34a96c"
+      [routerDirection]="'root'"
+      routerLink="/home"
+    >
+      Inicio
+    </button>
   </div>
 </ion-content>
 <ion-content class="column" *ngIf="!tcp">

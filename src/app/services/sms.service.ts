@@ -27,105 +27,105 @@ export class SmsService {
 
   async getCentralData() {
     return this.storage.get("currentUser").then((user) => {
-      const central = user.SMSDevices[user.DeviceSelected];
-      return { phone: central.PhoneNumber, pinSim: central.SimPin };
+      const equipo = user.SMSDevices[user.DeviceSelected];
+      return { phone: equipo.PhoneNumber, pinSim: equipo.SimPin };
     });
   }
 
   async armAlarmAbsent() {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}ARA*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}ARA*Tausend`, this.options);
   }
 
   async armAlarmDay() {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}ARD*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}ARD*Tausend`, this.options);
   }
 
   async armAlarmNight() {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}ARN*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}ARN*Tausend`, this.options);
   }
 
   async disarmAlarm() {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}DAR*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}DAR*Tausend`, this.options);
   }
 
   async status() {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}STS*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}STS*Tausend`, this.options);
   }
 
   async panic() {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}PAN*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}PAN*Tausend`, this.options);
   }
 
   async silentAssault() {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}ASA*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}ASA*Tausend`, this.options);
   }
 
   async emergency() {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}MED*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}MED*Tausend`, this.options);
   }
 
   async exclusions(arrayExclusions: string[]) {
     const { phone, pinSim } = await this.getCentralData();
     const exclusions = arrayExclusions.join(",");
-      this.sms.send(phone, `Activar*${pinSim}exc${exclusions}*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}exc${exclusions}*Tausend`, this.options);
   }
 
   async scheduledDepartures(scheduledDeparture: number) {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}PGM${scheduledDeparture}*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}PGM${scheduledDeparture}*Tausend`, this.options);
   }
 
   async createContactNumber(zone: number, number: string) {
     const { phone, pinSim } = await this.getCentralData();
       this.sms.send(
         phone,
-        `Activar*${pinSim}PRG0${78 + zone}h${number}*`,
+        `Alarmas*${pinSim}PRG0${78 + zone}h${number}*Tausend`,
         this.options
       );
   }
 
   async readContactNumber(zone: number) {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}PRG0${78 + zone}*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}PRG0${78 + zone}*Tausend`, this.options);
   }
 
   async deleteContactNumber(zone: number) {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}PRG0${78 + zone}hf*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}PRG0${78 + zone}hf*Tausend`, this.options);
   }
 
   async readMessage(messageNumber: number) {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}SML${messageNumber}*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}SML${messageNumber}*Tausend`, this.options);
   }
 
   async createMessage(messageNumber: number, message: string) {
     const { phone, pinSim } = await this.getCentralData();
       this.sms.send(
         phone,
-        `Activar*${pinSim}SMU${messageNumber}${message}*`,
+        `Alarmas*${pinSim}SMU${messageNumber}${message}*Tausend`,
         this.options
       );
   }
 
   async identification(identification: string) {
     const { phone, pinSim } = await this.getCentralData();
-      this.sms.send(phone, `Activar*${pinSim}IDF${identification}*`, this.options);
+      this.sms.send(phone, `Alarmas*${pinSim}IDF${identification}*Tausend`, this.options);
   }
 
   async changePasswordSMS(newPassword: string) {
     const { phone, pinSim } = await this.getCentralData();
       this.sms.send(
         phone,
-        `Activar*${pinSim}PIN${newPassword}${newPassword}*`,
+        `Alarmas*${pinSim}PIN${newPassword}${newPassword}*Tausend`,
         this.options
       );
   }

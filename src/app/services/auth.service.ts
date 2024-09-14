@@ -151,8 +151,10 @@ export class AuthService {
    */
   logout() {
     this.storage.get('currentUser').then((user: AccountDTO) => {
+      console.log('Entrando a logout');
       PushNotifications.addListener('registration', (token: Token) => {
-        this.removeToken(user.AccessToken, token.value);
+        this.removeToken(user.AccessToken, token.value).subscribe((x) => {
+        });
       });
       this.storage.remove('currentUser').then((response) => {
         this.authSubject.next(false);
@@ -166,7 +168,7 @@ export class AuthService {
   /**
    * Removes token from backend to prevent reciving notifications
    */
-  private removeToken(userToken: string, deviceToken: string) {
+  public removeToken(userToken: string, deviceToken: string): Observable<any> {
     const pendingTokens = this.getPendingTokens();
     let index = -1;
     pendingTokens.forEach((pair, i) => {
@@ -178,27 +180,33 @@ export class AuthService {
       'https://tausend.wearelomo.com/Services/AccountService.svc/Logout';
     const body = { AccessToken: userToken, DeviceToken: deviceToken };
     if (this.api.online) {
-      this.http.post(url, body).subscribe(
-        (res: ResponseDTO | any) => {
+      return new Observable((observer) => {
+        this.http.post(url, body).subscribe((res: ResponseDTO | any) => {
           if (res.Code === 0) {
             if (index != -1) {
               pendingTokens.splice(index, 1);
               this.setPendingTokens(pendingTokens);
+              console.log('Pending tokens: ', pendingTokens);
+              observer.next(res);
+            } else {
+              console.log('Pending tokens: ', pendingTokens);
+              observer.next(res);
             }
           } else {
             if (index == -1) {
+              console.log('Pending tokens: ', pendingTokens);
               this.addPendingToken(userToken, deviceToken);
+              observer.next(res);
+            } else {
+              observer.next(res);
             }
           }
-        },
-        () => {
-          if (index == -1) {
-            this.addPendingToken(userToken, deviceToken);
-          }
-        }
-      );
+        });
+      });
     } else {
-      this.addPendingToken(userToken, deviceToken);
+      return new Observable((obs) =>
+        obs.error('Su dispositivo móvil se encuentra actualmente offline')
+      );
     }
   }
 

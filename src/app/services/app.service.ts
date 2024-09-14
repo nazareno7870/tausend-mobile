@@ -31,7 +31,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -76,7 +76,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
               return
             } else {
@@ -123,7 +123,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -169,7 +169,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -304,7 +304,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -349,7 +349,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -394,7 +394,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -439,7 +439,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -485,7 +485,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -531,7 +531,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
@@ -565,7 +565,6 @@ export class AppService {
   }
 
   createAccountDeviceToken(token : any): Observable<any> {
-    console.log("createAccountDeviceToken " + token);
     if (this.api.online) {
       return new Observable((observer) => {
         this.storage
@@ -619,7 +618,7 @@ export class AppService {
               user.Devices[user.Devices.length - 1].DeviceId == 0
             ) {
               observer.error(
-                'Para enviar comandos primero debe vincular un dispositivo. Puede hacerlo desde "Menu > Vincular Dispositivo"'
+                'Para enviar comandos primero debe vincular un equipo. Puede hacerlo desde "Menu > Vincular equipo"'
               );
             } else {
               let body = {
