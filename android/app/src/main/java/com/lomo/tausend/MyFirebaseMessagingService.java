@@ -6,6 +6,7 @@ import android.content.Context;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -56,7 +57,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         System.out.println( "Channel id: " + remoteMessage.getNotification().getChannelId());
 
         // Create notification builder if the channel id exists or if it doesn't exist use de default one
-        if(remoteMessage.getNotification().getChannelId().equals("my_channel_id")) {
+        if(remoteMessage.getNotification() != null && remoteMessage.getNotification().getChannelId() != null &&
+          remoteMessage.getNotification().getChannelId().equals("my_channel_id")) {
                   NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "my_channel_id")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(remoteMessage.getNotification().getTitle())
@@ -66,6 +68,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
+          Log.d("FirebaseNotification", "Notification: " + remoteMessage.getNotification().toString());
+
+          // También puedes imprimir valores específicos
+          Log.d("FirebaseNotification", "Title: " + remoteMessage.getNotification().getTitle());
+          Log.d("FirebaseNotification", "Body: " + remoteMessage.getNotification().getBody());
+          Log.d("FirebaseNotification", "Channel ID: " + remoteMessage.getNotification().getChannelId());
         } else {
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "default_channel_id")
                     .setSmallIcon(R.drawable.ic_notification)
@@ -74,6 +82,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setAutoCancel(true);
             NotificationManager notificationManager2 = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager2.notify(0, notificationBuilder.build());
+          Log.d("FirebaseNotification", "Notification: " + remoteMessage.getNotification().toString());
+
+          // También puedes imprimir valores específicos
+          Log.d("FirebaseNotification", "Title: " + remoteMessage.getNotification().getTitle());
+          Log.d("FirebaseNotification", "Body: " + remoteMessage.getNotification().getBody());
+          Log.d("FirebaseNotification", "Channel ID: " + remoteMessage.getNotification().getChannelId());
         }
     }
 }
